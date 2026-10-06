@@ -1,9 +1,12 @@
-Feature: Yo como tester quiero probar la funcionalidad de interruptor
+Feature: Evaluación de Estado del Sistema Barista
 
-  Scenario: Verificar el estado del interruptor en un momento dado
-    Given url 'https://statemachine--maria7221.replit.app/api/'
-    And path 'switch/state'
+  @smoke @GH-1
+  Scenario: Consultar estado actual del robot cafetero
+
+    Given url baseUrl
+    And path 'barista-bot/estado'
     And headers { Content-Type: 'application/json', Accept: 'application/json' }
-    when method get
-    * print 'Estado actual del interruptor:' , response.state
-    * match respondeStatus == 200
+    When method get
+    Then status 200
+    And match response.estadoActual == '#present'
+    And match responseStatus == 200
